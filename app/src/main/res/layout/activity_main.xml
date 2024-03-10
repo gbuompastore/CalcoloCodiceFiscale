@@ -7,14 +7,32 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/editTextNome"
+        android:id="@+id/editTextCognome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:ems="10"
-        android:hint="@string/nome"
+        android:hint="@string/cognome"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.228"
+        app:layout_constraintHorizontal_bias="0.298"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/textViewCf"
+        android:layout_width="208dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="336dp"
+        android:background="#009688"
+
+        android:backgroundTint="#E6F6D2"
+
+        android:hint="Codice Fiscale"
+        android:inputType="none"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,42 +40,50 @@
         android:id="@+id/editTextDataDiNascita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="160dp"
         android:ems="10"
         android:hint="Data di Nascita"
         android:inputType="date"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.223"
+        app:layout_constraintHorizontal_bias="0.293"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <EditText
-        android:id="@+id/editTextCognome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:ems="10"
-        android:hint="@string/cognome"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.228"
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteComuni"
+        android:layout_width="208dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="216dp"
+        android:hint="Comune di Nascita"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonScegliData"
+        android:id="@+id/buttonCalcola"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="120dp"
-        android:onClick="selezionaData"
-        android:text="Seleziona"
-        app:layout_constraintStart_toEndOf="@+id/editTextDataDiNascita"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="392dp"
+        android:onClick="calcola"
+        android:text="Calcola"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/editTextNome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="@string/nome"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.298"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -65,10 +91,10 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.139"
+        app:layout_constraintHorizontal_bias="0.184"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.338">
+        app:layout_constraintVertical_bias="0.398">
 
 
         <RadioButton
@@ -85,35 +111,15 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/buttonCalcola"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="352dp"
-        android:onClick="calcola"
-        android:text="Calcola"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/buttonScegliData"
+        android:layout_width="62dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="160dp"
+        android:onClick="selezionaData"
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteComuni"
-        android:layout_width="208dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="176dp"
-        android:hint="Comune di Nascita"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/textViewCf"
-        android:layout_width="200dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="296dp"
-        android:inputType="text"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:icon="@android:drawable/ic_menu_my_calendar"
+        app:layout_constraintStart_toEndOf="@+id/editTextDataDiNascita"
         app:layout_constraintTop_toTopOf="parent" />
 
 
