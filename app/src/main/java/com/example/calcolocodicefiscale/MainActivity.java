@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 
 import com.example.calcolocodicefiscale.utils.Comuni;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     AutoCompleteTextView comune;
     ArrayAdapter<String> adapter;
+    ComuniService comuniService=new ComuniService();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +62,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         try {
             InputStream open = getAssets().open("comuni_pv.csv");
-            comunis = readFile(open);
-            List<String> cm= comunis.stream().map(c->c.getDescrizione()).collect(Collectors.toList());
+            comunis = comuniService.readFile(open);
+            List<String> cm= comunis.stream().map(Comuni::getDescrizione).collect(Collectors.toList());
             adapter= new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, cm);
             comune.setAdapter(adapter);
 
@@ -73,24 +75,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
     }
 
-    public static List<Comuni> readFile(InputStream inputStream) throws IOException {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-        List<Comuni> comuni=new ArrayList<>();
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] split = line.split(",");
-            Comuni c = new Comuni();
-            c.setCodice(split[0].replaceAll("\"", ""));
-            c.setDescrizione(split[1]);
-            c.setCap(split[2]);
-            c.setCodBelfiore(split[3]);
-            c.setProvincia(split[4]);
-            comuni.add(c);
-        }
-
-        return comuni;
-    }
 
     public void selezionaData(View view) {
         DatePickerFragment newFragment = new DatePickerFragment();
@@ -100,13 +85,21 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     public void calcola(View view) {
+        String dataDiNascitaString = editTextDataDiNascita.getText().toString();
+        String nome = editTextNome.getText().toString();
+        String cognome = editTextCognome.getText().toString();
+        String comuneString = comune.getText().toString();
+
+        if (dataDiNascitaString.isEmpty() || nome.isEmpty() || cognome.isEmpty() || comuneString.isEmpty()) {
+            Toast.makeText(this, "Compilare tutti i campi", Toast.LENGTH_SHORT).show();
+            return; // Exit the method if any field is empty
+        }
         LocalDate date = LocalDate.parse(editTextDataDiNascita.getText().toString(), formatter);
         //operatore ternario, ovvero una if else in una sola riga
         String sesso = radioButtonF.isChecked()?"F":"M";
-        String nome= editTextNome.getText().toString();
-        String cognnome= editTextCognome.getText().toString();
-        String codComune=cercaCodBelfiore(comune.getText().toString());
-        String cf = FiscalUtils.creaCodiceFiscale(cognnome, nome, codComune,date,sesso );
+
+        String codComune=cercaCodBelfiore(comuneString);
+        String cf = FiscalUtils.creaCodiceFiscale(cognome, nome, codComune,date,sesso );
         textViewCf.setText(cf);
         Log.d("MainActivity",sesso);
         Log.d("MainActivity",date.toString());
@@ -124,6 +117,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         editTextDataDiNascita.setText(LocalDate.of(year,month,day).format(formatter));
+    }
+
+    public void resetFields(View view) {
+        editTextDataDiNascita.setText("");
+        editTextCognome.setText("");
+        editTextNome.setText("");
+        comune.setText("");
+        textViewCf.setText("");
     }
 
     public static class TimePickerFragment extends DialogFragment
