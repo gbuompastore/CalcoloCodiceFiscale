@@ -1,6 +1,6 @@
 package com.example.calcolocodicefiscale;
 
-import com.example.calcolocodicefiscale.utils.Comuni;
+import com.example.calcolocodicefiscale.utils.Comune;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,14 +11,14 @@ import java.util.List;
 
 public class ComuniService {
 
-    public  List<Comuni> readFile(InputStream inputStream) throws IOException {
+    public  List<Comune> readFile(InputStream inputStream) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-        List<Comuni> comuni=new ArrayList<>();
+        List<Comune> comuni=new ArrayList<>();
         String line;
         while ((line = br.readLine()) != null) {
             String[] split = line.split(",");
-            Comuni c = new Comuni();
+            Comune c = new Comune();
             c.setCodice(split[0].replaceAll("\"", ""));
             c.setDescrizione(split[1]);
             c.setCap(split[2]);

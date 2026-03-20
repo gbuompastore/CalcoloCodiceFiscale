@@ -20,20 +20,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
-import com.example.calcolocodicefiscale.utils.Comuni;
+import com.example.calcolocodicefiscale.utils.Comune;
 import com.example.calcolocodicefiscale.utils.DatePickerFragment;
 import com.example.calcolocodicefiscale.utils.FiscalUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,9 +35,9 @@ import java.util.stream.Collectors;
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     EditText editTextDataDiNascita, editTextNome, editTextCognome;
-    EditText textViewCf;
+    TextView textViewCf;
     RadioButton radioButtonM, radioButtonF;
-    List<Comuni> comunis;
+    List<Comune> comunis;
 
     AutoCompleteTextView comune;
     ArrayAdapter<String> adapter;
@@ -63,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         try {
             InputStream open = getAssets().open("comuni_pv.csv");
             comunis = comuniService.readFile(open);
-            List<String> cm= comunis.stream().map(Comuni::getDescrizione).collect(Collectors.toList());
+            List<String> cm= comunis.stream().map(Comune::getDescrizione).collect(Collectors.toList());
             adapter= new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, cm);
             comune.setAdapter(adapter);
 
@@ -106,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     public String cercaCodBelfiore(String comune){
-        for (Comuni c:comunis){
+        for (Comune c:comunis){
             if(c.getDescrizione().equals(comune)){
                 return c.getCodBelfiore();
             }
